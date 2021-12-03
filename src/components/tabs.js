@@ -17,6 +17,7 @@ const Tabs = (topics) => {
   //
 
   const allTopics = document.createElement('div');
+  allTopics .classList.add('topics');
 
   topics.forEach(text => {
     const singleTopic = document.createElement('div');
@@ -24,7 +25,7 @@ const Tabs = (topics) => {
     singleTopic.textContent = text;
     allTopics.appendChild(singleTopic);  
   });
-
+  
   return allTopics;
 }
 
@@ -38,16 +39,15 @@ const tabsAppender = (selector) => {
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
 
-  axios.get(`https://localhost:5001/api/topics`)
+  axios.get(`http://localhost:5001/api/topics`)
     .then(response =>{
-      console.log(response);
-    // const cardInfo = cardMaker(response.data);
-    // document.querySelector('div.cards').appendChild(cardInfo);
+      const topicsArray = response.data.topics;
+      const finalTabs = Tabs(topicsArray);
+      document.querySelector(selector).appendChild(finalTabs);
     }).catch(error =>{
       console.log("this is the error:")
       console.error(error);
   });
-
 
 }
 
